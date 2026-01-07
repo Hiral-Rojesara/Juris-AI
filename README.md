@@ -1,20 +1,59 @@
-# ⚖️ Juris-AI: Universal Legal Access
-**Empowering 1.4 Billion People with AI-Driven Legal Clarity**
+⚖️ Juris-AI: Universal Legal Access
+Breaking Language Barriers in Justice for 8 Billion People
 
-### 🚀 The Vision
-Juris-AI is born at the intersection of Law and AI. Our mission is to bridge the justice gap in India by simplifying complex legal jargon into 22+ regional languages.
+🎯 Project Vision
+Juris-AI is designed to democratize law. Our mission is to simplify complex "Legalese" into plain language and provide automated legal drafting in 100+ global languages. By aligning with UN Sustainable Development Goal 16, we aim to ensure "Justice for All" through the power of Azure AI and Large Language Models.
 
-### ✨ Key Features
-- **Smart OCR:** Scans legal notices/documents using Azure AI Document Intelligence.
-- **AI Jargon Simplifier:** Uses DistilBART Transformers to decode complex legalese.
-- **Inclusivity:** Framework ready for Voice-to-Text and Multilingual support.
+👩‍💻 Founder Profile: Hiral Rojesara
+A unique blend of Technical Core and Legal Expertise:
 
-### 👩‍💻 About the Founder
-**Hiral Rojesara**
-- Solo Founder with a unique dual-background: **BCA + PGDCA + MCA + LLB Scholar**.
-- Aiming to achieve **UN SDG 16**: Peace, Justice, and Strong Institutions.
+🎓 BCA | PGDCA | MCA (2015) - Technical Foundation
 
-### 🛠️ Tech Stack
-- **Cloud:** Microsoft Azure (Document Intelligence, Speech Services)
-- **Frontend:** Streamlit
-- **AI Models:** Hugging Face Transformers (NLP)
+⚖️ LLB (2025) - Legal Expertise & Domain Knowledge
+
+🚀 Solo Innovator focused on Legal-Tech transformation.
+
+🚀 Key Features
+🔍 Smart OCR Scanner: Extract text from complex legal documents instantly using AI Vision.
+
+🧠 AI Jargon Simplifier: Convert high-level court language into simple, understandable terms.
+
+🌐 Universal Translation: Break language barriers with support for 22+ Indian and 100+ global languages.
+
+✍️ Global Doc Creator: Automated legal drafting for Rent Agreements, NDAs, Affidavits, and more.
+
+🛠️ Tech Stack
+Frontend: Streamlit (Python)
+
+AI Models: Transformers (DistilBART for Summarization)
+
+Framework: Azure AI Integration (Vision & Translator)
+
+Backend Logic: Persistent Session State Management
+
+🌍 Global Impact (SDG 16)
+Juris-AI empowers citizens by:
+
+Reducing dependency on expensive legal consultations for basic understanding.
+
+Providing legal literacy to non-English speaking populations.
+
+Bridging the gap between the judiciary and the common man.
+
+📂 Installation & Usage
+Clone the repository:
+
+Bash
+
+git clone https://github.com/your-username/JurisAI.git
+Install dependencies:
+
+Bash
+
+pip install -r requirements.txt
+Run the application:
+
+Bash
+
+streamlit run app.py
+Submission for Microsoft Imagine Cup 2026
