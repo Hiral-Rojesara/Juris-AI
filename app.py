@@ -63,7 +63,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 _, col_l = st.columns([4, 1])
-user_lang = col_l.selectbox("🌍 Select Language", ["English", "Hindi (हिन्दी)", "Gujarati (ગુજરાતી)"])
+user_lang = col_l.selectbox("🌍 Select Language", ["English", "Hindi (हिन्दी)", "Gujarati (ગુજરાતી)", "Marathi (मराठी)", 
+        "Bengali (বাংলা)", "Punjabi (ਪੰਜਾਬੀ)", "Tamil (தமிழ்)", "Telugu (తెలుగు)", 
+        "Kannada (ಕನ್ನಡ)", "Malayalam (മലയാളം)", "Odia (ଓଡ଼ਿଆ)", "Assamese (অসমীয়া)", 
+        "Urdu (اردو)", "Sanskrit (संस्कृत)", "Kashmiri (کأشُر)", "Konkani (कोंकणी)", 
+        "Sindhi (سنڌي)", "Dogri (डोगरी)", "Maithili (मैथिली)", "Santali (संताली)", 
+        "Bodo (बड़ो)", "Manipuri (มৈতৈলোন্)"])
 
 # --- ALL 7 TABS WORKING ---
 tabs = st.tabs(
@@ -186,6 +191,7 @@ with tabs[6]:
 
     st.success("🏆 Representing Gujarat in Microsoft Imagine Cup 2026")
 st.markdown('<div class="footer">⚖️ Microsoft Imagine Cup 2026 | Built by - Hiral Rojesara (Technical & Legal Expertise)</div>', unsafe_allow_html=True)
+
 
 
 
