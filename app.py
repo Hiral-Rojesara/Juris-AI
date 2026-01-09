@@ -59,7 +59,7 @@ st.markdown("""
     .header { background: linear-gradient(90deg, #1E3A8A, #3B82F6); padding: 25px; border-radius: 15px; text-align: center; color: white; margin-bottom: 25px; }
     .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: white; text-align: center; border-top: 2px solid #1E3A8A; padding: 10px; font-weight: bold; }
     </style>
-    <div class="header"><h1>⚖️ JURIS-AI : BHARATIYA LEGAL MEGA-PORTAL</h1></div>
+    <div class="header"><h1>⚖️ JURIS-AI : BHARATIYA KANOONI SHAYAK</h1></div>
 """, unsafe_allow_html=True)
 
 _, col_l = st.columns([4, 1])
@@ -185,7 +185,8 @@ with tabs[6]:
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.success("🏆 Representing Gujarat in Microsoft Imagine Cup 2026")
-st.markdown('<div class="footer">⚖️ Microsoft Imagine Cup 2026 | Built by Hiral Rojesara</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer">⚖️ Microsoft Imagine Cup 2026 | Built by - Hiral Rojesara (Technical & Legal Expertise)</div>', unsafe_allow_html=True)
+
 
 
 
