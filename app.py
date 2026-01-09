@@ -151,9 +151,9 @@ with tabs[5]:
 # --- TAB 7: ABOUT US (FULL DETAILED) ---
 with tabs[6]:
     st.markdown('<div class="about-card">', unsafe_allow_html=True)
-    st.header("👤 Founder & Lead Developer")
+    st.header("👩‍🎓 Founder & Lead Developer")
     st.subheader("Hiral Rojesara")
-    st.write("**Education:** BCA | MCA | LLB Candidate (Class of 2025)")
+    st.write("**Education:** BCA | PGDCA | MCA | LLB (2025)")
     st.write("**Vision:** Breaking the language barrier in the Indian Legal System through Generative AI.")
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -186,5 +186,6 @@ with tabs[6]:
 
     st.success("🏆 Representing Gujarat in Microsoft Imagine Cup 2026")
 st.markdown('<div class="footer">⚖️ Microsoft Imagine Cup 2026 | Built by Hiral Rojesara</div>', unsafe_allow_html=True)
+
 
 
