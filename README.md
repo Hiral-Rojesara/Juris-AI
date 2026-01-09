@@ -1,59 +1,48 @@
-⚖️ Juris-AI: Universal Legal Access
-Breaking Language Barriers in Justice for 8 Billion People
+# ⚖️ Juris-AI: Bharatiya Legal Mega-Portal
+**Empowering 1.4 Billion Citizens with Multilingual Digital Justice.**
 
-🎯 Project Vision
-Juris-AI is designed to democratize law. Our mission is to simplify complex "Legalese" into plain language and provide automated legal drafting in 100+ global languages. By aligning with UN Sustainable Development Goal 16, we aim to ensure "Justice for All" through the power of Azure AI and Large Language Models.
+Juris-AI is a comprehensive digital judiciary ecosystem built for the **Microsoft Imagine Cup 2026**. It uses Generative AI to simplify the Indian legal system, making it accessible to every citizen in their native language.
 
-👩‍💻 Founder Profile: Hiral Rojesara
-A unique blend of Technical Core and Legal Expertise:
+---
 
-🎓 BCA | PGDCA | MCA (2015) - Technical Foundation
+## 🚀 Key Modules & Tabs
 
-⚖️ LLB (2025) - Legal Expertise & Domain Knowledge
+### 📄 AI Document Scanner
+Uses **GPT-4o Vision** to perform deep analysis on legal documents. It identifies key parties, dates, and potential legal risks from uploaded images.
 
-🚀 Solo Innovator focused on Legal-Tech transformation.
+### 📚 Act Library
+Provides detailed explanations and punishment criteria for **Bharatiya Nyaya Sanhita (BNS)** and **IPC** sections, ensuring users understand their rights and duties.
 
-🚀 Key Features
-🔍 Smart OCR Scanner: Extract text from complex legal documents instantly using AI Vision.
+### 🏛️ Court Directory
+A real-time locator that helps citizens find High Courts, District Courts, and Tribunals in their specific city or state.
 
-🧠 AI Jargon Simplifier: Convert high-level court language into simple, understandable terms.
+### ✍️ Draft Formats
+A library of standard Indian legal templates (NDA, Sale Deed, Rent Agreement, etc.) available for preview and download.
 
-🌐 Universal Translation: Break language barriers with support for 22+ Indian and 100+ global languages.
+### 📰 Live Legal News
+Fetches the latest Supreme Court judgments and legal reforms for 2025-26, keeping users updated with current judiciary trends.
 
-✍️ Global Doc Creator: Automated legal drafting for Rent Agreements, NDAs, Affidavits, and more.
+### 💬 Legal Queries (Q&A)
+An interactive AI-powered chat interface where users can ask complex legal questions and get simplified, accurate answers based on Indian Law.
 
-🛠️ Tech Stack
-Frontend: Streamlit (Python)
+### ℹ️ About Us (The Visionary)
+A detailed profile of the developer, **Hiral Rojesara** (BCA | MCA | LLB Candidate 2025), showcasing the fusion of legal knowledge and technical expertise.
 
-AI Models: Transformers (DistilBART for Summarization)
+---
 
-Framework: Azure AI Integration (Vision & Translator)
+## 🛠️ Technical Stack
+* **Core Engine**: Azure OpenAI (GPT-4o Vision)
+* **Deployment**: Microsoft Azure (Sweden Central)
+* **UI Framework**: Streamlit (Python)
+* **Voice Engine**: Web Speech Synthesis API for multi-language screen reading
 
-Backend Logic: Persistent Session State Management
+---
 
-🌍 Global Impact (SDG 16)
-Juris-AI empowers citizens by:
+## ⚙️ Setup & Deployment
+1.  **Repository**: Clone this project from GitHub.
+2.  **Requirements**: Install via `pip install -r requirements.txt`.
+3.  **Security**: Azure API Keys are managed via **Streamlit Secrets** for enhanced security.
+4.  **Live Access**: Deploy directly to Streamlit Cloud.
 
-Reducing dependency on expensive legal consultations for basic understanding.
-
-Providing legal literacy to non-English speaking populations.
-
-Bridging the gap between the judiciary and the common man.
-
-📂 Installation & Usage
-Clone the repository:
-
-Bash
-
-git clone https://github.com/your-username/JurisAI.git
-Install dependencies:
-
-Bash
-
-pip install -r requirements.txt
-Run the application:
-
-Bash
-
-streamlit run app.py
-Submission for Microsoft Imagine Cup 2026
+---
+⚖️ **Built by Hiral Rojesara | Powered by Microsoft Azure | Imagine Cup 2026**
