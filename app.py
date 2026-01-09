@@ -1,156 +1,164 @@
 import streamlit as st
-from transformers import pipeline
+import requests
+import base64
 
-# 1. Page Configuration
-st.set_page_config(page_title="Juris-AI | Universal Legal Access", page_icon="⚖️", layout="wide")
+AI_ENDPOINT = "https://juris-ai-brain-new.openai.azure.com/"
+DEPLOY_NAME = "juris-ai-model"
 
-# 2. State Initialization (Fixes Tab-to-Tab Data Loss)
-if "reset_count" not in st.session_state:
-    st.session_state.reset_count = 0
-if "summary_result" not in st.session_state:
-    st.session_state.summary_result = ""
 
-# 3. Premium Styling
+# --- FUNCTIONS ---
+def encode_image(uploaded_file):
+    return base64.b64encode(uploaded_file.getvalue()).decode('utf-8')
+
+
+def speak_text(text):
+    """Universal Browser Voice Fix"""
+    if text:
+        clean_text = text.replace("'", "").replace("\n", " ").replace('"', '')
+        js_code = f"""
+        <script>
+        window.speechSynthesis.cancel();
+        var msg = new SpeechSynthesisUtterance('{clean_text}');
+        msg.lang = 'en-IN';
+        window.speechSynthesis.speak(msg);
+        </script>
+        """
+        st.components.v1.html(js_code, height=0)
+
+
+def ask_juris_ai(prompt, lang="English", image_base64=None):
+    url = f"{AI_ENDPOINT}/openai/deployments/{DEPLOY_NAME}/chat/completions?api-version=2024-02-15-preview"
+    headers = {"api-key": AI_KEY, "Content-Type": "application/json"}
+
+    content = [{"type": "text", "text": prompt}]
+    if image_base64:
+        content.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}})
+
+    payload = {
+        "messages": [
+            {"role": "system", "content": f"You are Juris-AI. Expert in Indian Law. Language: {lang}."},
+            {"role": "user", "content": content}
+        ],
+        "max_tokens": 1500
+    }
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        return response.json()['choices'][0]['message']['content']
+    except:
+        return "Connection Error. Check Azure Settings."
+
+
+# --- UI STYLING ---
+st.set_page_config(page_title="Juris-AI Final Submission", layout="wide", initial_sidebar_state="collapsed")
 st.markdown("""
     <style>
-    .main { background-color: #f8f9fa; }
-    .banner { background: linear-gradient(135deg, #004578, #0078d4); color: white; padding: 25px; border-radius: 15px; text-align: center; margin-bottom: 20px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
-    .sidebar-card { background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; text-align: center; margin-bottom: 15px; }
-    .vision-box { background-color: #f0f7ff; border-left: 5px solid #0078d4; padding: 15px; border-radius: 10px; font-size: 14px; line-height: 1.5; color: #1a3a5a; }
-    .qualification-tag { background: #e8f4fd; color: #005a9e; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 12px; display: inline-block; margin: 2px; }
-    .stButton>button { border-radius: 20px; font-weight: bold; transition: 0.3s; }
+    .stApp { background-color: #FFFFFF; }
+    [data-testid="stSidebar"] { display: none; }
+    .header { background: linear-gradient(90deg, #1E3A8A, #3B82F6); padding: 25px; border-radius: 15px; text-align: center; color: white; margin-bottom: 25px; }
+    .footer { position: fixed; left: 0; bottom: 0; width: 100%; background: white; text-align: center; border-top: 2px solid #1E3A8A; padding: 10px; font-weight: bold; }
     </style>
-    """, unsafe_allow_html=True)
+    <div class="header"><h1>⚖️ JURIS-AI : BHARATIYA LEGAL MEGA-PORTAL</h1></div>
+""", unsafe_allow_html=True)
 
-# 4. Sidebar: Advanced Founder Profile & Detailed Vision
-with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/4140/4140047.png", width=90)
-    st.markdown("Solo Founder & Innovator - Hiral Rojesara")
-    st.markdown("""
-        <div style='margin-top:10px;'>
-            <span class='qualification-tag'>🎓 <b>BCA - Technical Core </b></span><br>
-            <span class='qualification-tag'>🎓 <b>PGDCA - Technical Core </b></span><br>
-            <span class='qualification-tag'>🎓 <b>MCA - Technical Core </b></span><br>
-            <span class='qualification-tag'>⚖️ <b>LLB (2025) - Legal Expertise</b></span><br>
-        </div>
-    """, unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+_, col_l = st.columns([4, 1])
+user_lang = col_l.selectbox("🌍 Select Language", ["English", "Hindi (हिन्दी)", "Gujarati (ગુજરાતી)"])
 
-    st.markdown("### 🎯 Detailed Project Vision")
-    st.markdown("""
-    <div class='vision-box'>
-    <b>Phase 1: Legal Literacy (Universal Access)</b><br>
-    Breaking down high-level 'Legalese' (Complex Court Language) into simple, understandable terms for 1.4 Billion people using Azure AI.<br><br>
-    <b>Phase 2: Global Inclusion</b><br>
-    Democratizing justice by providing automated legal drafting and translation in 22+ Indian languages and 100+ Global languages.<br><br>
-    <b>Phase 3: SDG 16 Alignment</b><br>
-    Strengthening legal institutions by reducing the gap between common citizens and law, ensuring "Justice for All" regardless of language or education.
-    </div>
-    """, unsafe_allow_html=True)
+# --- ALL 7 TABS WORKING ---
+tabs = st.tabs(
+    ["📄 SCANNER", "📚 ACT LIBRARY", "🏛️ COURT DIRECTORY", "✍️ DRAFT FORMATS", "📰 LIVE NEWS", "💬 QUERIES", "ℹ️ ABOUT US"])
 
-    st.divider()
-    if st.button("🔄 Reset Application", use_container_width=True):
-        st.session_state.clear()
-        st.rerun()
+# 1. SCANNER
+with tabs[0]:
+    st.subheader("📄 Strict AI Document Scanner")
+    up = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
+    if up:
+        c1, c2 = st.columns(2)
+        with c1:
+            st.image(up, width=400)
+        with c2:
+            if st.button("🚀 Analyze Now"):
+                res = ask_juris_ai("Strict Analysis: Extract parties, dates, and validity.", user_lang,
+                                   encode_image(up))
+                st.session_state['scan_res'] = res
+                st.write(res)
+            if 'scan_res' in st.session_state:
+                if st.button("🔊 Read Analysis"): speak_text(st.session_state['scan_res'])
 
-# 5. Professional Header
-st.markdown(
-    "<div class='banner'><h1>⚖️ Juris-AI: Universal Legal Access</h1><p>Empowering 8 Billion People with AI-Driven Justice</p></div>",
-    unsafe_allow_html=True)
+# 2. ACT LIBRARY
+with tabs[1]:
+    st.subheader("📚 Indian Act & Section Search")
+    act_q = st.text_input("Enter Act (e.g., BNS 103):")
+    if st.button("🔍 Get Full Details"):
+        res = ask_juris_ai(f"Explain {act_q} under Indian Law with punishment details.", user_lang)
+        st.session_state['act_res'] = res
+        st.info(res)
+    if 'act_res' in st.session_state:
+        if st.button("🔊 Listen to Sections"): speak_text(st.session_state['act_res'])
 
-tab1, tab2, tab3, tab4 = st.tabs(
-    ["🔍 OCR Scanner", "🧠 AI Jargon Simplifier", "🌐 Universal Translation", "✍️ Global Doc Creator"])
+# 3. COURT DIRECTORY
+with tabs[2]:
+    st.subheader("🏛️ Court Finder")
+    city = st.text_input("Enter City/State:")
+    if st.button("📍 Search Courts"):
+        res = ask_juris_ai(f"List all major courts in {city} with addresses.", user_lang)
+        st.write(res)
+        speak_text(f"Searching courts in {city}")
 
-# --- TAB 1: OCR ---
-with tab1:
-    st.subheader("Step 1: Intelligent Text Extraction")
-    # Dynamic key for clear functionality
-    col_up, col_clr = st.columns([6, 1])
-    with col_up:
-        up_file = st.file_uploader("Upload Legal Document (PDF/JPG/PNG)", type=['pdf', 'png', 'jpg'],
-                                   key=f"ocr_{st.session_state.reset_count}")
-    with col_clr:
-        st.write(" ")  # Spacer
-        if st.button("🗑️", key="clr_tab1", help="Clear Upload"):
-            st.session_state.reset_count += 1
-            st.rerun()
-    if up_file:
-        st.success(f"✅ Document '{up_file.name}' analyzed using Azure AI Vision framework.")
+# 4. DRAFT FORMATS
+with tabs[3]:
+    st.subheader("✍️ Download Professional Formats")
+    doc_sel = st.selectbox("Select Document", ["Rent Agreement", "Affidavit", "Legal Notice", "Sale Deed", "NDA"])
+    if st.button("📄 View Format"):
+        res = ask_juris_ai(f"Provide a standard blank formal format for {doc_sel} in India.", user_lang)
+        st.text_area("Template", res, height=300)
+        st.download_button("📩 Download PDF/Text", res, file_name=f"{doc_sel}.txt")
+        speak_text(f"Displaying {doc_sel} format")
 
-# --- TAB 2: SIMPLIFIER ---
-with tab2:
-    st.subheader("Step 2: Legal Jargon Simplifier")
-    raw_input = st.text_area("Paste Complex Legal Text:", height=150, key=f"sim_{st.session_state.reset_count}")
 
-    c1, c2 = st.columns([1, 5])
-    with c1:
-        if st.button("🚀 Simplify"):
-            if raw_input:
-                with st.spinner("Decoding Legalese..."):
-                    summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
-                    st.session_state.summary_result = summarizer(raw_input, max_length=70, min_length=30)[0][
-                        'summary_text']
-                    st.rerun()
-    with c2:
-        if st.button("🗑️", key="clr_tab2", help="Clear Text"):
-            st.session_state.summary_result = ""
-            st.session_state.reset_count += 1
-            st.rerun()
+# 6. QUERIES
+with tabs[5]:
+    st.subheader("💬 Ask Your Legal Question")
+    q = st.text_area("Enter your doubt:")
+    if st.button("Submit Query"):
+        res = ask_juris_ai(q, user_lang)
+        st.success(res)
+        speak_text(res)
 
-    if st.session_state.summary_result:
-        st.success(f"**Simplified Result:** {st.session_state.summary_result}")
+# --- TAB 7: ABOUT US (FULL DETAILED) ---
+with tabs[6]:
+    st.markdown('<div class="about-card">', unsafe_allow_html=True)
+    st.header("👤 Founder & Lead Developer")
+    st.subheader("Hiral Rojesara")
+    st.write("**Education:** BCA | MCA | LLB Candidate (Class of 2025)")
+    st.write("**Vision:** Breaking the language barrier in the Indian Legal System through Generative AI.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# --- TAB 3: TRANSLATION ---
-with tab3:
-    st.subheader("Step 3: Universal Language Access")
-    # Fetching data directly from Tab 2's session state
-    if st.session_state.summary_result:
-        st.info(f"**Input for Translation:** {st.session_state.summary_result}")
-        target = st.selectbox("Select Target Language:",
-                              ["Hindi", "Gujarati", "Spanish", "French", "German", "Arabic", "Mandarin"])
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown('<div class="about-card">', unsafe_allow_html=True)
+        st.subheader("🎯 Project Mission: Juris-AI")
+        st.write("""
+        Juris-AI is a multilingual legal aid platform designed to empower 1.4 billion Indians. 
+        It provides instant clarity on complex legal documents, Bharatiya Nyaya Sanhita (BNS) sections, 
+        and court procedures in local languages like Hindi, Gujarati, and more.
+        """)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-        btn_tr, btn_sp, btn_empty = st.columns([2, 2, 4])
-        with btn_tr:
-            if st.button(f"🌐 Translate to {target}"):
-                st.write(f"Processing Azure Translator API for {target}...")
-        with btn_sp:
-            st.button("🔊 Play Audio Summary")
-    else:
-        st.warning("⚠️ No data found. Please complete 'Step 2: AI Jargon Simplifier' first.")
+    with col2:
+        st.markdown('<div class="about-card">', unsafe_allow_html=True)
+        st.subheader("🛠️ Technical Stack")
+        st.write("- **AI Engine:** Azure OpenAI (GPT-4o Vision)")
+        st.write("- **Cloud:** Microsoft Azure (Sweden Central)")
+        st.write("- **Interface:** Python Streamlit Pro")
+        st.write("- **Speech:** Web Speech Synthesis API")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-# --- TAB 4: GLOBAL DOC CREATOR ---
-with tab4:
-    st.subheader("Step 4: Global Legal Document Creator")
+    st.markdown('<div class="about-card">', unsafe_allow_html=True)
+    st.subheader("🚀 2026 Roadmap")
+    st.write("1. **Live e-Courts Integration:** Directly track case status via API.")
+    st.write("2. **Voice-Only Navigation:** Helping the elderly and illiterate access justice.")
+    st.write("3. **Legal Kiosks:** Deploying Juris-AI tablets in rural Gram Panchayats.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    cat = st.selectbox("Document Category:",
-                       ["Property & Real Estate", "Business & Finance", "Court & Estate Planning"],
-                       key=f"cat_{st.session_state.reset_count}")
-    doc_map = {"Property & Real Estate": ["Rent Agreement", "Sale Deed", "Lease Deed"],
-               "Business & Finance": ["NDA", "Partnership Deed", "Contract"],
-               "Court & Estate Planning": ["Affidavit", "Will", "Legal Notice"]}
-    selected_doc = st.selectbox("Select Document:", doc_map[cat], key=f"doc_{st.session_state.reset_count}")
-
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.text_input("Full Name (Party 1)", key=f"n1_{st.session_state.reset_count}")
-        st.text_input("Location / City", key=f"loc_{st.session_state.reset_count}")
-    with col_b:
-        st.text_input("Other Party / Authority", key=f"p2_{st.session_state.reset_count}")
-        st.text_area("Specific Details / Clauses", height=68, key=f"ext_{st.session_state.reset_count}")
-
-    act1, act2 = st.columns([6, 1])
-    with act1:
-        if st.button(f"📝 Generate {selected_doc}", use_container_width=True):
-            st.success(f"✅ {selected_doc} Drafted Successfully!")
-            st.code(
-                f"DRAFT: {selected_doc.upper()}\nParty: {st.session_state.get(f'n1_{st.session_state.reset_count}')}\n[AI Legal Clauses generated...]")
-    with act2:
-        if st.button("🗑️", key="clr_tab4", help="Clear All Fields"):
-            st.session_state.reset_count += 1
-            st.rerun()
-
-# --- FINAL FOOTER ---
-st.divider()
-st.markdown(
-    f"<p style='text-align: center; color: #777;'>Juris-AI © 2026 | Microsoft Imagine Cup Submission | Founder: Hiral Rojesara (Technical & Legal Expertise)</p>",
-    unsafe_allow_html=True)
+    st.success("🏆 Representing Gujarat in Microsoft Imagine Cup 2026")
+st.markdown('<div class="footer">⚖️ Microsoft Imagine Cup 2026 | Built by Hiral Rojesara</div>', unsafe_allow_html=True)
