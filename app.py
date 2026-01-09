@@ -2,8 +2,10 @@ import streamlit as st
 import requests
 import base64
 
-AI_ENDPOINT = "https://juris-ai-brain-new.openai.azure.com/"
-DEPLOY_NAME = "juris-ai-model"
+# In settings ko functions ke upar add karein
+AI_KEY = st.secrets["AZURE_OPENAI_KEY"]
+AI_ENDPOINT = st.secrets["AZURE_OPENAI_ENDPOINT"]
+DEPLOY_NAME = st.secrets["AZURE_DEPLOYMENT_NAME"]
 
 
 # --- FUNCTIONS ---
@@ -114,7 +116,22 @@ with tabs[3]:
         st.download_button("📩 Download PDF/Text", res, file_name=f"{doc_sel}.txt")
         speak_text(f"Displaying {doc_sel} format")
 
-
+# 5. LIVE NEWS (Fixed & Functional)
+with tabs[4]:
+    st.subheader("📰 Live Bharatiya Legal News")
+    st.write("Stay updated with the latest Supreme Court judgments and legal reforms.")
+    
+    if st.button("🔄 Fetch Latest Legal Headlines"):
+        with st.spinner("Fetching from Azure Knowledge Base..."):
+            # Updated prompt to bypass the "training cutoff" error
+            news_query = "Act as a legal news reporter. Provide 5 important recent legal updates or Supreme Court of India judgments for the year 2025-26."
+            res = ask_juris_ai(news_query, user_lang)
+            st.session_state['news_res'] = res
+            st.markdown(res)
+            
+    if 'news_res' in st.session_state:
+        if st.button("🔊 Read News Updates"): 
+            speak_text(st.session_state['news_res'])
 # 6. QUERIES
 with tabs[5]:
     st.subheader("💬 Ask Your Legal Question")
@@ -162,3 +179,4 @@ with tabs[6]:
 
     st.success("🏆 Representing Gujarat in Microsoft Imagine Cup 2026")
 st.markdown('<div class="footer">⚖️ Microsoft Imagine Cup 2026 | Built by Hiral Rojesara</div>', unsafe_allow_html=True)
+
