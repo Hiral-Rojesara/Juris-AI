@@ -6,6 +6,11 @@ import pytesseract
 from PIL import Image, ImageEnhance, ImageFilter
 from utils.pdf_loader import load_pdf_text
 from utils.section_search import search_section
+import os
+
+# Safe cross-platform setup
+if os.name == "nt":
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 # =========================================================
 # LAW DATABASE
 # =========================================================
