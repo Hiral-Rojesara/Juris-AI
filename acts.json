@@ -1,0 +1,41 @@
+{
+  "constitutional": {
+    "constitution of india": "Supreme law of India, adopted in 1950, foundational to all other laws.",
+    "article 1": "Name and territory of the Union: India, that is Bharat, shall be a Union of States.",
+    "article 21": "Protection of life and personal liberty: No person shall be deprived of his life except according to procedure established by law.",
+    "government of india act 1935": "A key precursor to the Constitution, providing the federal structure."
+  },
+  "criminal": {
+    "ipc 302": "Punishment for murder: Death or imprisonment for life, and shall also be liable to fine.",
+    "crpc 154": "Information in cognizable cases; the basis for filing an FIR.",
+    "evidence act 3": "Interpretation clause defining 'Evidence', 'Fact', and 'Proved'.",
+    "bns 4": "General explanations and definitions under the new Bharatiya Nyaya Sanhita.",
+    "pmla 3": "Defines the offence of money-laundering.",
+    "arms act 3": "Prohibits acquisition or possession of firearms without a license."
+  },
+  "civil_property": {
+    "contract act 10": "All agreements are contracts if they are made by the free consent of parties.",
+    "cpc 9": "Courts shall have jurisdiction to try all suits of a civil nature.",
+    "transfer of property 5": "Defines 'Transfer of Property' as an act by which a living person conveys property.",
+    "easements act 4": "Defines an easement as a right which the owner of land possesses."
+  },
+  "family": {
+    "hindu marriage act 5": "Conditions for a valid Hindu marriage.",
+    "hindu adoption 7": "Capacity of a male Hindu to take in adoption.",
+    "muslim marriage act 2": "Grounds for decree for dissolution of Muslim marriage."
+  },
+  "labor": {
+    "industrial disputes act 2": "Defines 'Industry', 'Lay-off', and 'Retrenchment'.",
+    "minimum wages act 3": "Fixing of minimum rates of wages by the appropriate government.",
+    "factories act 11": "Provisions regarding cleanliness in factories."
+  },
+  "corporate_commercial": {
+    "companies act 2": "Contains definitions like 'Director', 'Private Company', and 'Share Capital'.",
+    "negotiable instruments 13": "Defines 'Negotiable Instrument' as a promissory note, bill of exchange or cheque."
+  },
+  "special_acts": {
+    "it act 66": "Punishment for computer-related offences like hacking.",
+    "motor vehicles 185": "Driving by a drunken person or by a person under the influence of drugs.",
+    "consumer protection 2": "Defines 'Consumer' and 'Unfair Trade Practice'."
+  }
+}
