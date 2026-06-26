@@ -48,13 +48,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# =========================================================
-# TESSERACT CONFIG
-# =========================================================
 
-pytesseract.pytesseract.tesseract_cmd = (
-    r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-)
 
 # =========================================================
 # SESSION STATE
