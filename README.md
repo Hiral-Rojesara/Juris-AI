@@ -137,16 +137,9 @@ Juris-AI/
 
 ### Hiral Rojesara
 
-AI Developer | Legal-Tech Innovator
+AI Developer | Legal-Tech Innovator | Generative AI Enthusiast
 
-Projects & Interests:
-
-- Artificial Intelligence
-- Generative AI
-- Legal Technology
-- Machine Learning
-- OCR Systems
-- Accessibility Solutions
+Focused on building AI-powered solutions that improve accessibility, legal awareness, and citizen services through modern machine learning and large language models.
 
 ---
 
