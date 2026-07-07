@@ -120,43 +120,6 @@ Juris-AI/
 └── test_section.py
 ```
 
----
-
-## ⚙️ Local Installation
-
-### Clone Repository
-
-```bash
-git clone https://github.com/Hiral-Rojesara/Juris-AI.git
-```
-
-### Open Project
-
-```bash
-cd Juris-AI
-```
-
-### Install Requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-
-## 🔒 Security
-
-API keys are securely managed using Streamlit Secrets.
-
-Never upload:
-
-```text
-.streamlit/secrets.toml
-```
-
-to GitHub.
-
----
-
 ## 🎯 Use Cases
 
 - Legal Awareness
